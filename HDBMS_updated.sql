@@ -118,10 +118,10 @@ VALUES(201001, '120_90'),
 (201020, '120_80');
 
 
-/*Displaying the basic details of patient like blood_pressure, blood_sugar, weight, height, gender*/
+/*Displaying the basic details of patient like blood_pressure, blood_sugar, weight, height, gender, BMI*/
 CREATE OR REPLACE VIEW patient_bs_bp_level AS
     SELECT 
-        ph.patient_id, pd.patient_name, pd.height, pd.weight, pd.gender, ph.blood_sugar_level, bp.blood_pressure_level
+        ph.patient_id, pd.patient_name, pd.height, pd.weight, pd.gender, ph.blood_sugar_level, bp.blood_pressure_level, cast(ROUND(pd.weight / POWER(pd.height/100, 2), 3) as decimal(10,2)) as BMI
     FROM
         Hospital_mgmt_db.Patients_Health_History ph
             JOIN
@@ -131,21 +131,20 @@ CREATE OR REPLACE VIEW patient_bs_bp_level AS
         
 SELECt * from patient_bs_bp_level;
 
-/*Calculating the BMI*/
+
+/*Displaying the basic details of a specific patient like blood_pressure, blood_sugar, weight, height, gender through procedure with the help pf their patient_id*/
 DELIMITER $$
 USE Hospital_mgmt_db $$
-CREATE PROCEDURE BMI_calculation (IN p_id int)
+CREATE procedure patient_bs_bp_level (IN p_id INT)
 BEGIN
-SELECT patient_id, patient_name, cast(ROUND(weight / POWER(height/100, 2), 3) as decimal(10,2)) as BMI
-FROM
-Hospital_mgmt_db.patient_details
-where patient_id = p_id;
+SELECT 
+        ph.patient_id, pd.patient_name, pd.height, pd.weight, pd.gender, ph.blood_sugar_level, bp.blood_pressure_level, cast(ROUND(pd.weight / POWER(pd.height/100, 2), 3) as decimal(10,2)) as BMI
+    FROM
+        Hospital_mgmt_db.Patients_Health_History ph
+            JOIN
+        Hospital_mgmt_db.patients_blood_pressure_level bp ON ph.patient_id = bp.patient_id
+			join
+		Hospital_mgmt_db.patient_details pd on ph.patient_id = pd.patient_id
+	WHERE p_id = ph.patient_id;
 END $$
-
 DELIMITER ;
-
-UPDATE Hospital_mgmt_db.patient_details
-SET weight = 70
-WHERE patient_id = 201001;
-
-DROP TABLE Hospital_mgmt_db.staff;
