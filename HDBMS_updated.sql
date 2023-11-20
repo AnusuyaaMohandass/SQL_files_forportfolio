@@ -154,7 +154,8 @@ CREATE OR REPLACE VIEW staff_with_highest_no_of_patients as
 	company_id,
 	staff_name, 
 	designation,
-	dense_rank() over w as Specialists_with_high_patients_ranks
+	dense_rank() over w as Specialists_with_high_patients_ranks,
+	No_of_patients
 	FROM hospital_staff_details
 	where designation != 'Nurse'
 	window w as (order by No_of_patients desc);
