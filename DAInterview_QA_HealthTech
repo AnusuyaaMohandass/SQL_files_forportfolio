@@ -1,0 +1,61 @@
+/*Writing some queries for interview questions based of a HealthTech Company. I have written the questions first as comments and then the QUERY*/
+/*Question 1: Table: PatientRecords
+Columns: PatientID, VisitDate, DiagnosisCode
+Task: Write an SQL query to identify the most frequent diagnosis code for each month. (Note: Patients may have multiple visits and diagnoses in a month.)*/
+A1)
+SELECT 
+    MAX(DiagnosisCode), MONTH(VisitDate)
+FROM
+    PatientRecords
+Group by month(VisitDate), DiagnosisCode;
+
+/*Question 2: Table: ClinicStaff
+Columns: StaffID, Name, HireDate
+Task: Craft an SQL query to find the names of staff members who are celebrating their 5th, 10th, and 15th work anniversaries in 2023.*/
+A2)
+SELECT 
+    Name
+FROM
+    ClinicStaff
+WHERE year(sysdate()) - year(HireDate) = 5 or year(sysdate()) - year(HireDate) = 10 or year(sysdate()) - year(HireDate) = 15;
+
+/*Question 3: Given:
+Table X:
+Columns: ids with values 1, 1, 1, 1
+Table Y:
+Columns: ids with values 1, 1, 1, 1, 1, 1, 1, 1
+Task: Determine the count of rows in the output of the following queries:
+Select * From X join Y on X.ids != Y.ids
+Select * From X left join Y on X.ids != Y.ids
+Select * From X right join Y on X.ids != Y.ids
+Select * From X full outer join Y on X.ids != Y.ids*/
+A3)
+SELECT 
+    COUNT(ids) as row_of_ids
+FROM
+    TABLE_X
+JOIN TABLE_Y on X.ids = Y.ids
+GROUP by ids;
+
+SELECT 
+    COUNT(ids) as row_of_ids
+FROM
+    TABLE_X
+LEFT JOIN TABLE_Y on X.ids = Y.ids
+GROUP by ids;
+
+SELECT 
+    COUNT(ids) as row_of_ids
+FROM
+    TABLE_X
+Right JOIN TABLE_Y on X.ids = Y.ids
+GROUP by ids;
+
+SELECT 
+    COUNT(ids) as row_of_ids
+FROM
+    TABLE_X
+FUll JOIN TABLE_Y on X.ids = Y.ids
+GROUP by ids;
+
+
