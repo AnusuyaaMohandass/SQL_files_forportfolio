@@ -4,7 +4,7 @@ Columns: PatientID, VisitDate, DiagnosisCode
 Task: Write an SQL query to identify the most frequent diagnosis code for each month. (Note: Patients may have multiple visits and diagnoses in a month.)*/
 A1)
 SELECT 
-    MAX(DiagnosisCode), MONTH(VisitDate)
+    MAX(COUNT(DiagnosisCode)), MONTH(VisitDate)
 FROM
     PatientRecords
 Group by month(VisitDate), DiagnosisCode;
