@@ -34,9 +34,12 @@ I understand that what I've created is just a primitive level of database and I'
 Thanks
 Anusuyaa
 
-# Update SQL_HealthCare_Database
+# Update 1: SQL_HealthCare_Database
 I have removed the Stored procedure called "BMI_calculation" and put the logic of the BMI into a new procedure called 'patient_bs_bp_level'. This new procedure contains all the basic details of a patient like name, height, weight, blood pressure level, blood sugar level and BMI (Body Mass Index: This parameter shows whether the patient is underweight, normal or overweight). We just need the call the procedure by giving the specific patient id (input parameter: p_id).
 
 - I have added the BMI logic into the existing view 'patient_bs_bp_level'.
 
 - I have given the same name  'patient_bs_bp_level' for procedure and view tables.
+
+# Update 2: SQL_HealthCare_Database
+Created a View which shows the Specialists with the highest number of patients in the hospital by a window function called Dense_rank(). Kindly Check the updated code and all the images attached in this mail.
